@@ -36,7 +36,7 @@ export default function Login(params){
         })
         .then((response) => {
             sessionStorage.setItem('token',JSON.stringify(response.data.result.signature.access));
-            navigate("/dashboard");
+            navigate("/l_home");
             console.log(response.data);
         }, (error) => {
             setErrAuth(true);

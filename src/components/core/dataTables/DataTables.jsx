@@ -55,28 +55,22 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'userId',
+    id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'userId',
+    label: 'name',
   },
   {
-    id: 'id',
-    numeric: true,
-    disablePadding: false,
-    label: 'id',
-  },
-  {
-    id: 'title',
+    id: 'email',
     numeric: false,
     disablePadding: false,
-    label: 'title',
+    label: 'email',
   },
   {
-    id: 'body',
-    numeric:false,
+    id: 'phone',
+    numeric: false,
     disablePadding: false,
-    label: 'body',
+    label: 'phone',
   },
 ];
 
@@ -166,7 +160,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          Post
+          User
         </Typography>
       )}
 
@@ -199,61 +193,32 @@ export default function EnhancedTable(props) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setData] = useState([]);
-  const token = sessionStorage.getItem('token')
-  console.log(token)
+  const token = sessionStorage.getItem('token');
+  const bearerToken = token.substring(1, token.length - 1)
+  console.log(bearerToken)
 
   const apiUrl = "https://devapi.seinoindomobil.co.id:2002/test/user";
 
-
-  // const token = '{TOKEN}';
-
-    // axios.request({
-    //   headers: {
-    //     Authorization: `Bearer ${token}`
-    //   },
-    //   method: "GET",
-    //   url: `https://devapi.seinoindomobil.co.id:2002/test/user`
-    // }).then(response => {
-    //   console.log(response.data);
-    // });
-
-      // Create a config object with the Authorization header
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      
-
+  const config = {
+    headers: {
+      Authorization: `Bearer ${bearerToken}`,
+    },
+  };
 
   useEffect(() => {
     // Make the GET request using Axios
     axios
       .get(apiUrl, config)
       .then((response) => {
-        console.log(response)
-        // setData(response.result);
-        // handleRequestSort();
+        console.log(response.data)
+        setData(response.data.result);
+        handleRequestSort();
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, [apiUrl, token]); 
+  }, [apiUrl, bearerToken]); 
 
-
-  // useEffect(() => {
-
-  //   axios.get('https://jsonplaceholder.typicode.com/posts')
-  //     .then((response) => {
-  //       console.log(response)
-  //       setData(response.data);
-  //       handleRequestSort();
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching data:', error);
-  //     });
-  // }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -362,10 +327,9 @@ export default function EnhancedTable(props) {
                         }}
                       />
                     </TableCell>
-                    <TableCell align="left">{row.userId}</TableCell>
-                    <TableCell align="left">{row.id}</TableCell>
-                    <TableCell align="left">{row.title}</TableCell>
-                    <TableCell align="left">{row.body}</TableCell>
+                    <TableCell align="left">{row.name}</TableCell>
+                    <TableCell align="left">{row.email}</TableCell>
+                    <TableCell align="left">{row.phone}</TableCell>
                   </TableRow>
                 );
               })}

@@ -14,8 +14,8 @@ export default function App() {
       {/* <Header/> */}
         <Routes>
         <Route path="/" element={<Login/>}/>
-        <Route path="/dashboard" element={<Dashboard/>}/>
-        <Route path="/table" element={<Table/>}/>
+        <Route path="/l_home" element={<Dashboard/>}/>
+        <Route path="/l_user" element={<Table/>}/>
       </Routes>
       </BrowserRouter>
       </div>

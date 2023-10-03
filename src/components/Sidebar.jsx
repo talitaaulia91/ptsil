@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState, Component } from 'react';
 import '../assets/css/index.css'
 import Buttons from './core/Button.jsx'
 import AppBar from '@mui/material/AppBar';
@@ -22,19 +22,32 @@ const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [rows, setData] = useState([]);
 
-  const token = sessionStorage.getItem('token')
-  console.log(token);
+  const token = sessionStorage.getItem('token');
+  const bearerToken = token.substring(1, token.length - 1)
 
-  // axios.request({
-  //   headers: {
-  //     Authorization: `Bearer ${token}`
-  //   },
-  //   method: "GET",
-  //   url: `https://devapi.seinoindomobil.co.id:2002/test/user`
-  // }).then(response => {
-  //   console.log(response.data);
-  // });
+  const apiUrl = "https://devapi.seinoindomobil.co.id:2002/test/menu";
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${bearerToken}`,
+    },
+  };
+
+  useEffect(() => {
+    // Make the GET request using Axios
+    axios
+      .get(apiUrl, config)
+      .then((response) => {
+        console.log(response.data)
+        setData(response.data.result);
+        handleRequestSort();
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, [apiUrl, bearerToken]); 
 
   const navigate = useNavigate ();
   const clearLocalStorage = () => {
@@ -51,18 +64,14 @@ function ResponsiveDrawer(props) {
     <div>
       <div className='title' style={{ textAlign:"center", justifyContent:"center" }}>Hello.</div>
       <List>
-          <ListItem component={Link} to="/dashboard">
-            <ListItemIcon>
-            <DashboardIcon sx={{ color:"#4D2DB7" }} />
-            </ListItemIcon>
-            <div className="listItem">Dashboard</div>
-          </ListItem>
-          <ListItem component={Link} to="/table">
-            <ListItemIcon>
-            <DashboardIcon sx={{ color:"#4D2DB7" }} />
-            </ListItemIcon>
-            <div className="listItem">Table</div>
-          </ListItem>
+          {rows.map((item, index) => (
+              <ListItem component={Link} to={item.link}>
+              <ListItemIcon>
+              <DashboardIcon sx={{ color:"#4D2DB7" }} />
+              </ListItemIcon>
+              <div className="listItem">{item.name}</div>
+            </ListItem>
+            ))}
       
       </List>
 
