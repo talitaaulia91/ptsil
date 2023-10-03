@@ -17,7 +17,7 @@ export default function Cards(props) {
     <Card sx={{ display: 'flex', height:"100%" }}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
-          <div className="title">Hello, {props.username}!</div>
+          <div className="title">Hello!</div>
           <div className="subtitle" >This is your profile page, you can see and edit your own profile. Aside from that, you can also see your performance report below.</div>
         </CardContent>
       </Box>

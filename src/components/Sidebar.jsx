@@ -65,7 +65,7 @@ function ResponsiveDrawer(props) {
       <div className='title' style={{ textAlign:"center", justifyContent:"center" }}>Hello.</div>
       <List>
           {rows.map((item, index) => (
-              <ListItem component={Link} to={item.link}>
+              <ListItem component={Link} to={'/' + item.link}>
               <ListItemIcon>
               <DashboardIcon sx={{ color:"#4D2DB7" }} />
               </ListItemIcon>

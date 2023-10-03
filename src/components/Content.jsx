@@ -4,7 +4,7 @@ import Cards from './core/Card.jsx'
 const Content = () => {
   return (
     <div>
-      <Cards username="Lia"></Cards>
+      <Cards></Cards>
     </div>
   );
 };
